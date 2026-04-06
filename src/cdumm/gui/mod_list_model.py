@@ -10,7 +10,7 @@ from cdumm.engine.mod_manager import ModManager
 
 logger = logging.getLogger(__name__)
 
-COLUMNS = ["☐", "#", "Name", "Author", "Version", "Status", "Files", "Import Date"]
+COLUMNS = ["☐", "#", "名称", "作者", "版本", "状态", "文件数", "导入时间"]
 COL_ENABLED = 0
 COL_ORDER = 1
 COL_NAME = 2
@@ -26,6 +26,17 @@ STATUS_COLORS = {
     "no data": QColor(244, 67, 54),       # red
     "disabled": QColor(158, 158, 158),    # gray
     "checking...": QColor(158, 158, 158), # gray
+}
+
+STATUS_LABELS = {
+    "active": "已生效",
+    "not applied": "未应用",
+    "no data": "无数据",
+    "disabled": "已禁用",
+    "checking...": "检查中...",
+    "resolved": "已解决",
+    "conflict": "冲突",
+    "clean": "兼容",
 }
 
 
@@ -166,9 +177,11 @@ class ModListModel(QAbstractTableModel):
             if col == COL_STATUS:
                 status = self._status_cache.get(mod["id"], "")
                 conflict = self._conflict_status_cache.get(mod["id"], "clean")
+                status_text = STATUS_LABELS.get(status, status)
                 if conflict in ("conflict", "resolved"):
-                    return f"{status} ({conflict})"
-                return status
+                    conflict_text = STATUS_LABELS.get(conflict, conflict)
+                    return f"{status_text}（{conflict_text}）"
+                return status_text
             if col == COL_FILES:
                 return str(self._file_count_cache.get(mod["id"], 0))
             if col == COL_DATE:

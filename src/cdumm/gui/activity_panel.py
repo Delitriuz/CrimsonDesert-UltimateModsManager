@@ -27,7 +27,7 @@ class ActivityPanel(QWidget):
         layout.setSpacing(8)
 
         # Header
-        header = QLabel("Activity Log")
+        header = QLabel("活动日志")
         header.setStyleSheet("font-size: 15px; font-weight: bold; color: #ECEFF4;")
         layout.addWidget(header)
 
@@ -35,7 +35,7 @@ class ActivityPanel(QWidget):
         toolbar = QHBoxLayout()
         toolbar.setSpacing(8)
 
-        toolbar.addWidget(QLabel("Session:"))
+        toolbar.addWidget(QLabel("会话："))
         self._session_combo = QComboBox()
         self._session_combo.setMinimumWidth(200)
         self._session_combo.currentIndexChanged.connect(self._on_filter_changed)
@@ -44,23 +44,23 @@ class ActivityPanel(QWidget):
         toolbar.addSpacing(12)
 
         self._search_input = QLineEdit()
-        self._search_input.setPlaceholderText("Search logs...")
+        self._search_input.setPlaceholderText("搜索日志...")
         self._search_input.returnPressed.connect(self._on_search)
         toolbar.addWidget(self._search_input)
 
-        search_btn = QPushButton("Search")
+        search_btn = QPushButton("搜索")
         search_btn.setFixedWidth(70)
         search_btn.clicked.connect(self._on_search)
         toolbar.addWidget(search_btn)
 
-        clear_btn = QPushButton("Clear")
+        clear_btn = QPushButton("清除")
         clear_btn.setFixedWidth(60)
         clear_btn.clicked.connect(self._on_clear_search)
         toolbar.addWidget(clear_btn)
 
         toolbar.addSpacing(12)
 
-        export_btn = QPushButton("Export Log")
+        export_btn = QPushButton("导出日志")
         export_btn.setFixedWidth(90)
         export_btn.clicked.connect(self._on_export)
         toolbar.addWidget(export_btn)
@@ -91,11 +91,11 @@ class ActivityPanel(QWidget):
         """Reload session list and show latest session."""
         self._session_combo.blockSignals(True)
         self._session_combo.clear()
-        self._session_combo.addItem("All Sessions", None)
+        self._session_combo.addItem("全部会话", None)
 
         sessions = self._log.get_sessions(limit=30)
         for s in sessions:
-            label = f"Session {s['id']} — {s['started_at']} (v{s['version']}, {s['count']} entries)"
+            label = f"会话 {s['id']} — {s['started_at']} (v{s['version']}，{s['count']} 条记录)"
             self._session_combo.addItem(label, s["id"])
 
         # Select latest session by default
@@ -124,8 +124,8 @@ class ActivityPanel(QWidget):
     def _on_export(self):
         from PySide6.QtWidgets import QFileDialog
         path, _ = QFileDialog.getSaveFileName(
-            self, "Export Activity Log", "cdumm_activity_log.txt",
-            "Text Files (*.txt);;All Files (*)")
+            self, "导出活动日志", "cdumm_activity_log.txt",
+            "文本文件 (*.txt);;所有文件 (*)")
         if not path:
             return
         entries = self._log.get_entries()
@@ -140,7 +140,7 @@ class ActivityPanel(QWidget):
         if not entries:
             html_parts.append(
                 '<tr><td style="color:#788090; padding:20px; text-align:center;">'
-                'No log entries</td></tr>')
+                '暂无日志记录</td></tr>')
         else:
             for entry in entries:
                 cat = entry["category"]

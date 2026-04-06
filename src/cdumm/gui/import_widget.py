@@ -33,8 +33,8 @@ class ImportWidget(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(8, 6, 8, 6)
         self._label = QLabel(
-            "Drop a mod to install or update  \u2022  Drop an update to replace existing\n"
-            "zip, folder, .json, .bat, .py  \u2022  Right-click mods for more options"
+            "拖放模组进行安装或更新  \u2022  拖放更新包以替换现有版本\n"
+            "zip、文件夹、.json、.bat、.py  \u2022  右键模组查看更多选项"
         )
         self._label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._label.setStyleSheet(DROP_DEFAULT)

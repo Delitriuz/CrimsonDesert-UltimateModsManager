@@ -35,13 +35,13 @@ class AsiPanel(QWidget):
 
         # Header
         header = QHBoxLayout()
-        title = QLabel("ASI Plugins")
+        title = QLabel("ASI 插件")
         title.setStyleSheet("font-size: 14px; font-weight: 600; padding-left: 8px;")
         header.addWidget(title)
         self._loader_label = QLabel()
         header.addWidget(self._loader_label)
         header.addStretch()
-        refresh_btn = QPushButton("Refresh")
+        refresh_btn = QPushButton("刷新")
         refresh_btn.clicked.connect(self.refresh)
         header.addWidget(refresh_btn)
         layout.addLayout(header)
@@ -49,7 +49,7 @@ class AsiPanel(QWidget):
         # Table — 3 columns, no inline buttons
         self._table = QTableWidget()
         self._table.setColumnCount(3)
-        self._table.setHorizontalHeaderLabels(["Plugin", "Status", "Conflicts"])
+        self._table.setHorizontalHeaderLabels(["插件", "状态", "冲突"])
         from PySide6.QtWidgets import QHeaderView
         self._table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
         self._table.horizontalHeader().setStretchLastSection(True)
@@ -61,7 +61,7 @@ class AsiPanel(QWidget):
         layout.addWidget(self._table)
 
         # Hint
-        hint = QLabel("Right-click a plugin for actions")
+        hint = QLabel("右键插件可执行更多操作")
         hint.setStyleSheet("color: #4E5564; font-size: 11px; padding: 4px 8px;")
         layout.addWidget(hint)
 
@@ -69,16 +69,16 @@ class AsiPanel(QWidget):
 
     def refresh(self) -> None:
         if self._asi_mgr.has_loader():
-            self._loader_label.setText("ASI Loader: Installed")
+            self._loader_label.setText("ASI Loader：已安装")
             self._loader_label.setStyleSheet("color: #48A858; font-weight: 600;")
         else:
             # Try to auto-install bundled ASI loader
             self._install_bundled_loader()
             if self._asi_mgr.has_loader():
-                self._loader_label.setText("ASI Loader: Installed (auto)")
+                self._loader_label.setText("ASI Loader：已安装（自动）")
                 self._loader_label.setStyleSheet("color: #48A858; font-weight: 600;")
             else:
-                self._loader_label.setText("ASI Loader: Missing")
+                self._loader_label.setText("ASI Loader：缺失")
                 self._loader_label.setStyleSheet("color: #D04848; font-weight: 600;")
 
         self._plugins = self._asi_mgr.scan()
@@ -96,7 +96,7 @@ class AsiPanel(QWidget):
             self._table.setItem(row, 0, name_item)
 
             # Status with color
-            status = "Enabled" if plugin.enabled else "Disabled"
+            status = "已启用" if plugin.enabled else "已禁用"
             status_item = QTableWidgetItem(status)
             if plugin.enabled:
                 status_item.setForeground(QColor("#48A858"))
@@ -112,7 +112,7 @@ class AsiPanel(QWidget):
                 item = QTableWidgetItem(text)
                 item.setForeground(QColor("#D04848"))
             else:
-                item = QTableWidgetItem("None")
+                item = QTableWidgetItem("无")
                 item.setForeground(QColor("#4E5564"))
             self._table.setItem(row, 2, item)
 
@@ -159,27 +159,27 @@ class AsiPanel(QWidget):
 
         # Enable/Disable
         if plugin.enabled:
-            toggle = QAction("Disable", self)
+            toggle = QAction("禁用", self)
         else:
-            toggle = QAction("Enable", self)
+            toggle = QAction("启用", self)
         toggle.triggered.connect(lambda: self._toggle_plugin(plugin))
         menu.addAction(toggle)
 
         # Config (if .ini exists)
         if plugin.ini_path:
-            config = QAction("Edit Config", self)
+            config = QAction("编辑配置", self)
             config.triggered.connect(lambda: self._asi_mgr.open_config(plugin))
             menu.addAction(config)
 
         menu.addSeparator()
 
         # Update
-        update = QAction("Update", self)
+        update = QAction("更新", self)
         update.triggered.connect(lambda: self._update_plugin(plugin))
         menu.addAction(update)
 
         # Uninstall
-        uninstall = QAction("Uninstall", self)
+        uninstall = QAction("卸载", self)
         uninstall.triggered.connect(lambda: self._uninstall_plugin(plugin))
         menu.addAction(uninstall)
 
@@ -194,7 +194,7 @@ class AsiPanel(QWidget):
 
     def _update_plugin(self, plugin) -> None:
         path_str = QFileDialog.getExistingDirectory(
-            self, f"Update {plugin.name} — Select folder containing the new .asi")
+            self, f"更新 {plugin.name} — 选择包含新 .asi 的文件夹")
         if not path_str:
             return
         folder = Path(path_str)
@@ -204,7 +204,7 @@ class AsiPanel(QWidget):
             # Check one level deep
             asi_files = list(folder.rglob("*.asi"))
         if not asi_files:
-            QMessageBox.warning(self, "No ASI Found", "No .asi files found in that folder.")
+            QMessageBox.warning(self, "未找到 ASI", "该文件夹中未找到 .asi 文件。")
             return
         # Pick the one matching the plugin name, or the first one
         match = next((f for f in asi_files if plugin.name.lower() in f.stem.lower()), asi_files[0])
@@ -212,14 +212,14 @@ class AsiPanel(QWidget):
         if updated:
             QMessageBox.information(
                 self, "Updated",
-                f"Updated {plugin.name}:\n" + "\n".join(f"  {f}" for f in updated))
+                f"已更新 {plugin.name}：\n" + "\n".join(f"  {f}" for f in updated))
             self.refresh()
 
     def _uninstall_plugin(self, plugin) -> None:
         reply = QMessageBox.question(
             self, "Uninstall ASI Plugin",
-            f"Delete {plugin.name} from bin64?\n\n"
-            f"Files: {plugin.path.name}"
+            f"是否从 bin64 删除 {plugin.name}？\n\n"
+            f"文件：{plugin.path.name}"
             f"{', ' + plugin.ini_path.name if plugin.ini_path else ''}",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
         )

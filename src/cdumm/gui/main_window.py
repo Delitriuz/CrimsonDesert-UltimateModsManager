@@ -1379,13 +1379,13 @@ class MainWindow(QMainWindow):
             ("Verify Game State", self._on_verify_game_state),
             ("Check Mods For Issues", self._on_check_mods),
             ("Find Problem Mod", self._on_find_problem_mod),
-            ("Rescan After Steam Verify", self._on_refresh_snapshot),
+            ("Steam 验证后重新扫描", self._on_refresh_snapshot),
             ("Fix Everything", self._on_fix_everything),
-            ("Change Game Directory", self._on_change_game_dir),
+            ("更改游戏目录", self._on_change_game_dir),
             ("Profiles", self._on_profiles),
             ("Export Mod List", self._on_export_list),
             ("Import Mod List", self._on_import_list),
-            ("Test Mod Compatibility", self._on_test_mod),
+            ("测试模组兼容性", self._on_test_mod),
             ("Patch Notes", self._on_show_patch_notes),
             ("Report Bug", self._on_report_bug),
         ]:
@@ -1403,16 +1403,16 @@ class MainWindow(QMainWindow):
         about_v.setSpacing(16)
 
         from cdumm import __version__ as _about_ver
-        about_title = QLabel(f"Crimson Desert Ultimate Mods Manager")
+        about_title = QLabel("红色沙漠终极 Mod 管理器")
         about_title.setStyleSheet("font-size: 18px; font-weight: bold; color: #D4A43C;")
         about_v.addWidget(about_title)
 
-        about_ver = QLabel(f"Version {_about_ver}")
+        about_ver = QLabel(f"版本 {_about_ver}")
         about_ver.setStyleSheet("font-size: 13px; color: #888;")
         about_v.addWidget(about_ver)
 
         # Update status indicator — big and visible
-        self._about_update_label = QLabel("Checking for updates...")
+        self._about_update_label = QLabel("正在检查更新...")
         self._about_update_label.setStyleSheet(
             "font-size: 15px; font-weight: bold; color: #888; "
             "padding: 12px; border: 1px solid #333; border-radius: 8px; "
@@ -1423,15 +1423,15 @@ class MainWindow(QMainWindow):
 
         # Links
         import webbrowser
-        links_label = QLabel("Links")
+        links_label = QLabel("相关链接")
         links_label.setStyleSheet("font-size: 14px; font-weight: bold; color: #D8DEE9;")
         about_v.addWidget(links_label)
 
         for text, url in [
-            ("GitHub Releases — Download Latest", "https://github.com/faisalkindi/CrimsonDesert-UltimateModsManager/releases"),
-            ("NexusMods Page", "https://www.nexusmods.com/crimsondesert/mods/207"),
-            ("NexusMods Posts & Discussion", "https://www.nexusmods.com/crimsondesert/mods/207?tab=posts"),
-            ("Report a Bug", "https://www.nexusmods.com/crimsondesert/mods/207?tab=bugs"),
+            ("GitHub Releases（下载最新版）", "https://github.com/faisalkindi/CrimsonDesert-UltimateModsManager/releases"),
+            ("NexusMods 页面", "https://www.nexusmods.com/crimsondesert/mods/207"),
+            ("NexusMods 帖子与讨论", "https://www.nexusmods.com/crimsondesert/mods/207?tab=posts"),
+            ("报告问题", "https://www.nexusmods.com/crimsondesert/mods/207?tab=bugs"),
         ]:
             link_btn = QPushButton(text)
             link_btn.setFixedHeight(36)

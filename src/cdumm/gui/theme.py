@@ -28,7 +28,7 @@ QMainWindow {{
 }}
 QWidget {{
     color: {TEXT_PRIMARY};
-    font-family: "Segoe UI", sans-serif;
+    font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", "Segoe UI", sans-serif;
     font-size: 13px;
 }}
 

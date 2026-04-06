@@ -149,8 +149,8 @@ class ConflictDetector:
                 level="papgt",
                 byte_start=None, byte_end=None,
                 explanation=(
-                    f"{mod_a_name} and {mod_b_name} modify PAMT files in different directories. "
-                    "PAPGT will be rebuilt automatically — no action needed."
+                    f"{mod_a_name} 与 {mod_b_name} 在不同目录修改了 PAMT 文件。"
+                    "PAPGT 会自动重建，无需额外操作。"
                 ),
             ))
 
@@ -178,9 +178,9 @@ class ConflictDetector:
                             level="byte_range",
                             byte_start=None, byte_end=None,
                             explanation=(
-                                f"{mod_a_name} and {mod_b_name} both modify "
-                                f"{entry_path} in {file_path}. "
-                                f"Winner: {winner_name} (higher load order)."
+                                f"{mod_a_name} 与 {mod_b_name} 都修改了 "
+                                f"{file_path} 中的 {entry_path}。"
+                                f"优先生效：{winner_name}（加载顺序更高）。"
                             ),
                             winner_id=winner_id, winner_name=winner_name,
                         ))
@@ -193,8 +193,8 @@ class ConflictDetector:
                         level="paz",
                         byte_start=None, byte_end=None,
                         explanation=(
-                            f"{mod_a_name} and {mod_b_name} both modify {file_path} "
-                            "but different game files inside it. Compatible."
+                            f"{mod_a_name} 与 {mod_b_name} 都修改了 {file_path}，"
+                            "但修改的是其中不同的游戏文件，彼此兼容。"
                         ),
                     ))
                 continue
@@ -213,8 +213,8 @@ class ConflictDetector:
                     level="paz",
                     byte_start=None, byte_end=None,
                     explanation=(
-                        f"{mod_a_name} and {mod_b_name} both modify {file_path}. "
-                        "They may be compatible if they change different parts of the file."
+                        f"{mod_a_name} 与 {mod_b_name} 都修改了 {file_path}。"
+                        "若修改的是不同区域，通常可以兼容。"
                     ),
                 ))
                 continue
@@ -229,9 +229,9 @@ class ConflictDetector:
                     level="paz",
                     byte_start=None, byte_end=None,
                     explanation=(
-                        f"{mod_a_name} and {mod_b_name} both modify {file_path}. "
-                        "Too many byte ranges for detailed comparison — "
-                        f"winner: {winner_name} (higher load order)."
+                        f"{mod_a_name} 与 {mod_b_name} 都修改了 {file_path}。"
+                        "字节范围过多，无法进行细粒度比对；"
+                        f"优先生效：{winner_name}（加载顺序更高）。"
                     ),
                     winner_id=winner_id, winner_name=winner_name,
                 ))
@@ -253,15 +253,15 @@ class ConflictDetector:
                         )
                         if record_info:
                             explanation = (
-                                f"{mod_a_name} and {mod_b_name} both modify "
-                                f"{record_info} in {file_path}. "
-                                f"Winner: {winner_name} (higher load order)."
+                                f"{mod_a_name} 与 {mod_b_name} 都修改了 "
+                                f"{file_path} 中的 {record_info}。"
+                                f"优先生效：{winner_name}（加载顺序更高）。"
                             )
                         else:
                             explanation = (
-                                f"{mod_a_name} and {mod_b_name} both modify "
-                                f"bytes {overlap_start}-{overlap_end} in {file_path}. "
-                                f"Winner: {winner_name} (higher load order)."
+                                f"{mod_a_name} 与 {mod_b_name} 都修改了 "
+                                f"{file_path} 的字节区间 {overlap_start}-{overlap_end}。"
+                                f"优先生效：{winner_name}（加载顺序更高）。"
                             )
 
                         conflicts.append(Conflict(
@@ -283,8 +283,8 @@ class ConflictDetector:
                     level="paz",
                     byte_start=None, byte_end=None,
                     explanation=(
-                        f"{mod_a_name} and {mod_b_name} both modify {file_path} "
-                        "but at different byte ranges. Likely compatible."
+                        f"{mod_a_name} 与 {mod_b_name} 都修改了 {file_path}，"
+                        "但字节区间不同，通常可兼容。"
                     ),
                 ))
 

@@ -15,9 +15,9 @@ LEVEL_COLORS = {
 }
 
 LEVEL_LABELS = {
-    "papgt": "Auto-handled (PAPGT)",
-    "paz": "Compatible (different byte ranges)",
-    "byte_range": "Resolved (load order)",
+    "papgt": "已自动处理（PAPGT）",
+    "paz": "兼容（字节范围不同）",
+    "byte_range": "已解决（按加载顺序）",
 }
 
 # Data role for storing mod IDs on tree items
@@ -42,7 +42,7 @@ class ConflictView(QWidget):
         self._tree.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self._tree.customContextMenuRequested.connect(self._show_context_menu)
         self._model = QStandardItemModel()
-        self._model.setHorizontalHeaderLabels(["Conflict", "Level", "Resolution"])
+        self._model.setHorizontalHeaderLabels(["冲突项", "级别", "解决方式"])
         self._tree.setModel(self._model)
         self._tree.header().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
         self._tree.header().setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
@@ -55,7 +55,7 @@ class ConflictView(QWidget):
         self._model.removeRows(0, self._model.rowCount())
 
         if not conflicts:
-            empty = QStandardItem("No conflicts detected")
+            empty = QStandardItem("未检测到冲突")
             empty.setForeground(QColor("#4CAF50"))
             self._model.appendRow([empty, QStandardItem(""), QStandardItem("")])
             return
@@ -85,7 +85,7 @@ class ConflictView(QWidget):
 
             # Show winner in the detail column for byte_range conflicts
             winner = first.winner_name if worst == "byte_range" and first.winner_name else ""
-            detail_text = f"Winner: {winner}" if winner else f"{len(pair_conflicts)} issue(s)"
+            detail_text = f"优先生效：{winner}" if winner else f"{len(pair_conflicts)} 个问题"
             detail_item = QStandardItem(detail_text)
             if winner:
                 detail_item.setForeground(QColor("#4CAF50"))
@@ -134,10 +134,12 @@ class ConflictView(QWidget):
         menu = QMenu(self)
         if mod_a_name:
             action_a = QAction(f"Set \"{mod_a_name}\" as winner", self)
+            action_a.setText(f"设为优先生效：{mod_a_name}")
             action_a.triggered.connect(lambda: self.winner_changed.emit(mod_a_id))
             menu.addAction(action_a)
         if mod_b_name:
             action_b = QAction(f"Set \"{mod_b_name}\" as winner", self)
+            action_b.setText(f"设为优先生效：{mod_b_name}")
             action_b.triggered.connect(lambda: self.winner_changed.emit(mod_b_id))
             menu.addAction(action_b)
 

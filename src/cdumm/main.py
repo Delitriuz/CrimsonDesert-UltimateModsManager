@@ -64,8 +64,16 @@ def main() -> int:
 
     # Minimal import for QApplication — everything else is lazy
     from PySide6.QtWidgets import QApplication
+    from PySide6.QtGui import QFont
+    from cdumm.gui.i18n_zh import install_chs_locale
+    install_chs_locale()
     app = QApplication(sys.argv)
-    app.setApplicationName("Crimson Desert Ultimate Mods Manager")
+    app.setApplicationName("红色沙漠终极 Mod 管理器")
+
+    # Better CJK readability on Windows: prefer YaHei and antialiasing.
+    ui_font = QFont("Microsoft YaHei UI", 10)
+    ui_font.setStyleStrategy(QFont.StyleStrategy.PreferAntialias)
+    app.setFont(ui_font)
 
     # Show splash immediately before heavy imports
     from cdumm.gui.splash import show_splash
@@ -77,7 +85,7 @@ def main() -> int:
     app.setStyleSheet(STYLESHEET)
 
     # Now do heavy imports
-    splash.showMessage("  Loading database...", 0x0081)  # AlignLeft | AlignBottom
+    splash.showMessage("  正在加载数据库...", 0x0081)  # AlignLeft | AlignBottom
     app.processEvents()
 
     from cdumm.storage.database import Database
@@ -180,7 +188,7 @@ def main() -> int:
     except Exception:
         pass
 
-    splash.showMessage("  Checking game state...", 0x0081)
+    splash.showMessage("  正在检查游戏状态...", 0x0081)
     app.processEvents()
 
     # Run heavy startup checks DURING splash (before UI shows)
@@ -191,7 +199,7 @@ def main() -> int:
     startup_context = {"stale": False, "has_snapshot": snapshot.has_snapshot()}
 
     if startup_context["has_snapshot"]:
-        splash.showMessage("  Verifying game files...", 0x0081)
+        splash.showMessage("  正在验证游戏文件...", 0x0081)
         app.processEvents()
 
         # Check game version fingerprint (fast — just reads a config value)
@@ -201,7 +209,7 @@ def main() -> int:
         if stored_fp and current_fp and stored_fp != current_fp:
             startup_context["game_updated"] = True
 
-    splash.showMessage("  Building UI...", 0x0081)
+    splash.showMessage("  正在构建界面...", 0x0081)
     app.processEvents()
 
     from cdumm.gui.main_window import MainWindow

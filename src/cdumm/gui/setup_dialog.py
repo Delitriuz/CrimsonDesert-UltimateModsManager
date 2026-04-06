@@ -21,21 +21,21 @@ class SetupDialog(QDialog):
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
-        self.setWindowTitle("Game Directory Setup")
+        self.setWindowTitle("游戏目录设置")
         self.setMinimumWidth(500)
         self._selected_path: Path | None = None
 
         layout = QVBoxLayout(self)
 
-        layout.addWidget(QLabel("Select your Crimson Desert installation folder:"))
+        layout.addWidget(QLabel("请选择 Crimson Desert 安装目录："))
 
         path_row = QHBoxLayout()
         self._path_edit = QLineEdit()
-        self._path_edit.setPlaceholderText("Steam or Xbox Game Pass install folder")
+        self._path_edit.setPlaceholderText("Steam 或 Xbox Game Pass 安装目录")
         self._path_edit.textChanged.connect(self._on_path_changed)
         path_row.addWidget(self._path_edit)
 
-        browse_btn = QPushButton("Browse...")
+        browse_btn = QPushButton("浏览...")
         browse_btn.clicked.connect(self._on_browse)
         path_row.addWidget(browse_btn)
         layout.addLayout(path_row)
@@ -44,12 +44,12 @@ class SetupDialog(QDialog):
         layout.addWidget(self._status_label)
 
         btn_row = QHBoxLayout()
-        self._ok_btn = QPushButton("OK")
+        self._ok_btn = QPushButton("确定")
         self._ok_btn.setEnabled(False)
         self._ok_btn.clicked.connect(self.accept)
         btn_row.addWidget(self._ok_btn)
 
-        cancel_btn = QPushButton("Cancel")
+        cancel_btn = QPushButton("取消")
         cancel_btn.clicked.connect(self.reject)
         btn_row.addWidget(cancel_btn)
         layout.addLayout(btn_row)
@@ -61,11 +61,11 @@ class SetupDialog(QDialog):
         candidates = find_game_directories()
         if candidates:
             self._path_edit.setText(str(candidates[0]))
-            self._status_label.setText(f"Auto-detected: {candidates[0]}")
+            self._status_label.setText(f"自动检测到：{candidates[0]}")
             logger.info("Auto-detected game directory: %s", candidates[0])
 
     def _on_browse(self) -> None:
-        folder = QFileDialog.getExistingDirectory(self, "Select Crimson Desert Folder")
+        folder = QFileDialog.getExistingDirectory(self, "选择 Crimson Desert 文件夹")
         if folder:
             self._path_edit.setText(folder)
 
@@ -74,13 +74,13 @@ class SetupDialog(QDialog):
         if validate_game_directory(path):
             self._selected_path = path
             self._ok_btn.setEnabled(True)
-            self._status_label.setText("Valid Crimson Desert installation found.")
+            self._status_label.setText("已找到有效的 Crimson Desert 安装目录。")
             self._status_label.setStyleSheet("color: green;")
         else:
             self._selected_path = None
             self._ok_btn.setEnabled(False)
             if text:
-                self._status_label.setText("bin64/CrimsonDesert.exe not found at this path.")
+                self._status_label.setText("此路径下未找到 bin64/CrimsonDesert.exe。")
                 self._status_label.setStyleSheet("color: red;")
             else:
                 self._status_label.setText("")

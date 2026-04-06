@@ -12,3 +12,4 @@ build/
 venv/
 .pytest_cache/
 .ruff_cache/
+run_cdumm_test.log
