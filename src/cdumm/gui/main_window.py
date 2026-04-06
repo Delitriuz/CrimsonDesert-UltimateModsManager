@@ -1428,7 +1428,7 @@ class MainWindow(QMainWindow):
         about_v.addWidget(links_label)
 
         for text, url in [
-            ("GitHub Releases（下载最新版）", "https://github.com/faisalkindi/CrimsonDesert-UltimateModsManager/releases"),
+            ("GitHub Releases（下载最新版）", "https://github.com/Delitriuz/CrimsonDesert-UltimateModsManager/releases"),
             ("NexusMods 页面", "https://www.nexusmods.com/crimsondesert/mods/207"),
             ("NexusMods 帖子与讨论", "https://www.nexusmods.com/crimsondesert/mods/207?tab=posts"),
             ("报告问题", "https://www.nexusmods.com/crimsondesert/mods/207?tab=bugs"),

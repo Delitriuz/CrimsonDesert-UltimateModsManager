@@ -4,7 +4,7 @@ A desktop mod manager for **Crimson Desert** that handles the game's PAZ/PAMT/PA
 
 **Works with Steam.** Xbox Game Pass installations are detected but currently limited by platform restrictions (read-only game files).
 
-![Screenshot](https://raw.githubusercontent.com/faisalkindi/CrimsonDesert-UltimateModsManager/master/screenshots/app.png?v=2)
+![Screenshot](https://raw.githubusercontent.com/Delitriuz/CrimsonDesert-UltimateModsManager/master/screenshots/app.png?v=2)
 
 ## Features
 
@@ -127,13 +127,13 @@ Built-in diagnostic report generator that collects system info, installed mods, 
 ## Installation
 
 ### Option 1: Standalone Executable (Recommended)
-Download `CDUMM.exe` from the [Releases](https://github.com/faisalkindi/CrimsonDesert-UltimateModsManager/releases) page. No Python required. Just run it.
+Download `CDUMM.exe` from the [Releases](https://github.com/Delitriuz/CrimsonDesert-UltimateModsManager/releases) page. No Python required. Just run it.
 
 ### Option 2: Run from Source
 Requires Python 3.10+.
 
 ```bash
-git clone https://github.com/faisalkindi/CrimsonDesert-UltimateModsManager.git
+git clone https://github.com/Delitriuz/CrimsonDesert-UltimateModsManager.git
 cd CrimsonDesert-UltimateModsManager
 pip install -e .
 py -3 -m cdumm.main

@@ -11,7 +11,7 @@ from PySide6.QtCore import QObject, Signal
 
 logger = logging.getLogger(__name__)
 
-GITHUB_REPO = "faisalkindi/CrimsonDesert-UltimateModsManager"
+GITHUB_REPO = "Delitriuz/CrimsonDesert-UltimateModsManager"
 RELEASES_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
 
 
