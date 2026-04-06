@@ -1,4 +1,4 @@
-# Crimson Desert Ultimate Mods Manager
+# Crimson Desert Ultimate Mods Manager-CHS 
 
 A desktop mod manager for **Crimson Desert** that handles the game's PAZ/PAMT/PAPGT archive format. Install, manage, and safely combine multiple mods with automatic conflict detection, JSON patch merging, and one-click revert to vanilla.
 
